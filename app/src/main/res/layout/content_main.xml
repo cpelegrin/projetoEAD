@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="4"
+    android:columnCount="3"
     android:orientation="horizontal"
     android:rowCount="2"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,4 +17,21 @@
         android:layout_height="wrap_content"
         android:text="@string/texto_do_bot_o"/>
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity2"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abrir navegador"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retornando dados"/>
 </GridLayout>
