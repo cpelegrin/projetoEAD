@@ -1,7 +1,7 @@
 package br.com.cpelegrin.myapplication;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -20,7 +20,7 @@ public class LayoutActivity extends AppCompatActivity {
         imgBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), ""+texto.getText(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + texto.getText(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,22 +1,34 @@
 package br.com.cpelegrin.myapplication;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
+    Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ctx = this;
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Activity2.class);
                 intent.putExtra("extra", "Extra novamente passado a partir activity principal");
-                startActivityForResult(intent,324);
+                startActivityForResult(intent, 324);
             }
         });
 
@@ -79,7 +93,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.d(TAG,"onCreate");
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+
+        registerReceiver(receiver, intentFilter);
+
+        Log.d(TAG, "onCreate");
     }
 
     @Override
@@ -92,31 +111,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // The activity is about to become visible.
-        Log.d(TAG,"onStart");
+        Log.d(TAG, "onStart");
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         // The activity has become visible (it is now "resumed").
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
-        Log.d(TAG,"onPause");
+        Log.d(TAG, "onPause");
+        if(isFinishing()){
+            unregisterReceiver(receiver);
+        }
     }
+
     @Override
     protected void onStop() {
         super.onStop();
         // The activity is no longer visible (it is now "stopped")
-        Log.d(TAG,"onStop");
+        Log.d(TAG, "onStop");
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // The activity is about to be destroyed.
-        Log.d(TAG,"onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 
     @Override
@@ -139,5 +165,74 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("AirplaneMode", "Service state changed. Action:  " + intent.getAction());
+
+
+            if (intent.getAction().equalsIgnoreCase(Intent.ACTION_AIRPLANE_MODE_CHANGED)) {
+                Log.e(TAG, "" + intent.getBooleanExtra("state", false));
+                if (intent.getBooleanExtra("state", false)) {
+                    createNotificationChannel();
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(ctx, "ID_DO_CANAL")
+                                    .setSmallIcon(R.drawable.baseline_android_black_18)
+                                    .setContentTitle("Minha notificação")
+                                    .setContentText("Minha primeira notificação");
+                    // Creates an explicit intent for an Activity in your app
+                    Intent resultIntent = new Intent(ctx, MainActivity.class);
+
+                    // The stack builder object will contain an artificial back stack for the
+                    // started Activity.
+                    // This ensures that navigating backward from the Activity leads out of
+                    // your application to the Home screen.
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(ctx);
+                    // Adds the back stack for the Intent (but not the Intent itself)
+                    stackBuilder.addParentStack(MainActivity.class);
+                    // Adds the Intent that starts the Activity to the top of the stack
+                    stackBuilder.addNextIntent(resultIntent);
+                    PendingIntent resultPendingIntent =
+                            stackBuilder.getPendingIntent(
+                                    0,
+                                    PendingIntent.FLAG_UPDATE_CURRENT
+                            );
+                    mBuilder.setContentIntent(resultPendingIntent);
+                    NotificationManager mNotificationManager =
+                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    // mId allows you to update the notification later on.
+                    mNotificationManager.notify(1, mBuilder.build());
+                }
+            }
+
+
+            //Imprime todos os extras do intent
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                for (String key : bundle.keySet()) {
+                    Object value = bundle.get(key);
+                    Log.d(TAG, String.format("%s %s (%s)", key,
+                            value.toString(), value.getClass().getName()));
+                }
+            }
+        }
+    };
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Canal";
+            String description = "Descrição";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("ID_DO_CANAL", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
