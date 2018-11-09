@@ -12,6 +12,9 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -93,6 +96,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button button6 = findViewById(R.id.button6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(new Intent(getApplicationContext(), MyService.class));
+                handler.sendEmptyMessageDelayed(0, 8000);
+
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        stopService(new Intent(getApplicationContext(), MyService.class));
+//                    }
+//                },8000);
+            }
+        });
+
+        Button button7 = findViewById(R.id.button7);
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(new Intent(getApplicationContext(), MyIntentService.class));
+            }
+        });
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
 
@@ -100,6 +126,15 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate");
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            stopService(new Intent(getApplicationContext(), MyService.class));
+            handler.removeMessages(0);
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
