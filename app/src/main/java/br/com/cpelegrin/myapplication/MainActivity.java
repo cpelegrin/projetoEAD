@@ -119,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
                 startService(new Intent(getApplicationContext(), MyIntentService.class));
             }
         });
+
+        Button button8 = findViewById(R.id.button8);
+        button8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), BancoDados.class));
+            }
+        });
+
+
+        //BroadcastReceiver de Airplane Mode
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
 

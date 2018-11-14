@@ -20,10 +20,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity2" />
-        <activity android:name=".LayoutActivity"/>
+        <activity android:name=".LayoutActivity" />
 
-        <service android:name=".MyService"/>
-        <service android:name=".MyIntentService"/>
+        <service android:name=".MyService" />
+        <service android:name=".MyIntentService" />
+
+        <activity android:name=".BancoDados"></activity>
     </application>
 
 </manifest>
