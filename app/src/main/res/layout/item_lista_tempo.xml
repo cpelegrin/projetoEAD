@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/cityLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Cidade:"-->
+            <!--android:layout_margin="16dp"-->
+            <!--android:textStyle="bold"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/cityText"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toEndOf="@id/cityLabel"-->
+            <!--android:layout_margin="16dp"-->
+            <!--android:text="Umuarama"/>-->
+
+    <!--</RelativeLayout>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data: "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19/11/2018 - Seg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/minLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Min: "
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/minText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25º" />
+
+            <TextView
+                android:id="@+id/maxLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Max: "
+                android:textStyle="bold"
+                android:layout_marginStart="16dp"/>
+
+            <TextView
+                android:id="@+id/maxText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="35º" />
+
+        </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tempestades isoladas" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
