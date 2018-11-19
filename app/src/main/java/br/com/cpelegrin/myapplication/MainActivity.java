@@ -128,6 +128,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button button9 = findViewById(R.id.button9);
+        button9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), TabsActivity.class));
+            }
+        });
 
         //BroadcastReceiver de Airplane Mode
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);

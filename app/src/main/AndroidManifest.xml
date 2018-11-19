@@ -17,6 +17,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
         <activity android:name=".Activity2" />
@@ -25,7 +27,15 @@
         <service android:name=".MyService" />
         <service android:name=".MyIntentService" />
 
-        <activity android:name=".BancoDados"></activity>
+        <activity android:name=".BancoDados" />
+        <activity
+            android:name=".TabsActivity"
+            android:label="@string/title_activity_tabs"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="Chave"/>
     </application>
 
 </manifest>
