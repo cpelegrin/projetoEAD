@@ -148,6 +148,9 @@ public class TabsActivity extends AppCompatActivity {
                 case 2:{
                     return new MapsFragment();
                 }
+                case 0:{
+                    return new ListFragment();
+                }
                 default:{
                     return PlaceholderFragment.newInstance(position + 1);
                 }
