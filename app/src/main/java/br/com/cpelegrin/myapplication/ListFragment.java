@@ -63,6 +63,7 @@ public class ListFragment extends Fragment {
                 .baseUrl("https://api.hgbrasil.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         ApiTempo httpRequest = client.create(ApiTempo.class);
 
         Call<ApiPojo> call = httpRequest.getInfTempo();
@@ -91,7 +92,7 @@ public class ListFragment extends Fragment {
 
         @Override
         public void onFailure(Call<ApiPojo> call, Throwable t) {
-            Log.e(TAG, "Erro na Requisição: "+ t.toString());
+            Log.e(TAG, "Falha no Retrofit: "+ t.toString());
         }
     };
 
